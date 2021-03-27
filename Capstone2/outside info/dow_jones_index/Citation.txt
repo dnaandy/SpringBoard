@@ -1,0 +1,1 @@
+Brown M.S., Pelosi M.J., Dirska H. (2013) Dynamic-Radius Species-Conserving Genetic Algorithm for the Financial Forecasting of Dow Jones Index Stocks. In: Perner P. (eds) Machine Learning and Data Mining in Pattern Recognition. MLDM 2013. Lecture Notes in Computer Science, vol 7988. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-642-39712-7_3

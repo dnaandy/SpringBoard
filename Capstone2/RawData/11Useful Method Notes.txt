@@ -1,0 +1,72 @@
+df.date = pd.to_datetime(df.date or df['date])
+df.set_index('date',inplace = True), df.info() to check, df.price.plot(title='') plt.tight_layout() plt.show() to see
+// df.asfreq('D' / 'W' /‘B’) // to set frequency // upsteaming, 每天都存在，比原始数据多roll了，有了missing value
+// df.asfreq('B') to business day, 也多了，df[df.price.isnull()] to see no trading on Business day
+
+df=pd.read_csv('',parse_dates=['date'],index_col='date')
+
+
+
+
+
+
+
+
+daily data to weekly data  =  pandas.resample()
+price to return                   = pct_change()              :   df['col'].pct_change()
+differences                       = diff()		:   df['col'].diff()
+correlation of two series  = corr()		:  df['ABC'].corr(df['XYZ']
+autocorrelation                 = autocorr()
+
+from statsmodels.tsa.stattools import adfuller
+results = adfuller(df['close'])
+results.summary()/info/description?   --  results[1] = P-value, <5% means not random walk.  results[0] = statistic value
+
+Simple Linear Regression method
+Statsmodels - import statsmodels.api as sm
+	        sm.OLS(y,x).fit()
+	       * df=sm.add_constant(df)  to add a constant for intercept
+	       * df=df.dropna() to drop the first row of NaN
+	       * sm.OLS(y,x).fit() to run the OLS
+	       * print(results.summary()) to print out the result summary
+	       * results.params[0] = constant
+	       * results.params[1] = slope1
+Numpy	     - np.polyfit(x,y,deg=1)
+Pandas	     - pd.ols(y,x)
+Scipy	     - from scipy import stats
+	     - stats.linregress(x,y)
+
+visualize autocorrelation function: ACF - autocorrelation function
+from statsmodels.graphics.tsaplots import plot_acf
+plot_acf(interest_rate_data, alpha=1, lags=12)
+
+to decide the AR mode parameters: PACF - partial autocorrelation function - benefit of adding one more lag
+from statsmodels.graphics.tsaplots import plot_pacf
+plot_pacf(interest_rate_data(series or array), alpha=0.05, lags=12)
+OROROROR:
+Information Criteria: more lags leads to overfit, need adjust goodness-of-fit for number of parameters
+AIC or BIC  res.aic / res.bic
+chooze the lowest AIC or BIC for ar(p) :
+
+from statsmodels.tsa.arima_model import ARMA
+# Fit the data to an AR(p) for p = 0,...,6 , and save the BIC
+BIC = np.zeros(7)
+for p in range(7):
+    mod = ARMA(simulated_data_2, order=(p,0))
+    res = mod.fit()
+# Save BIC for AR(p)    
+    BIC[p] = res.bic
+# Plot the BIC as a function of p
+plt.plot(range(1,7), BIC[1:7], marker='o')
+plt.xlabel('Order of AR Model')
+plt.ylabel('Bayesian Information Criterion')
+plt.show()
+
+AR model / MA model
+from statsmodels.tsa.arima_model import ARMA
+mod = ARMA(simulated_data_1, order=(p.q) or (1,0) for AR / (0,1) for MA)
+res = mod.fit()
+print(res.summary()) or res.params
+res.predict(start='2011-01-01', end='2011-12-31') for series of data or
+res.plot_predict(start='2011-01-01' or 990, end='2011-12-31' or 1010 or mix) for plot of data
+plt.show()
